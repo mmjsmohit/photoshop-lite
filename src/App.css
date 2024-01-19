@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'Adobe Clean Black';
+  src: url('./font/AdobeCleanBlack.otf');
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'Adobe Clean Black Italic';
+  src: url('./font/AdobeCleanBlackIt.otf');
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: 'Adobe Clean Black', sans-serif;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+body {
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 
+  "image sidebar"
+  "slider sidebar"
+  "header psLogo"
+  "footer footer";
+  height: 100vh;
+  width: 100vw;
+  background-color: #747474;
+}
+
+.header {
+  grid-area: header;
+  background-color: #001d26;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.psLogo {
+  grid-area: psLogo;
+  background-color: #001d26;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-image {
+  grid-area: image;
+  background-image: url("./images/photo.avif");
+  width: 100%;
+  height: 100%;
+  background-position: top center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: #001d26;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: stretch;
+}
+
+.slider-container {
+  grid-area: slider;
+  background-color: #001d26;
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.slider {
+  width: 100%;
+  cursor: pointer;
+}
+
+.sidebar-item {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #001d26;
+  padding: 1rem;
+  position: relative;
+  transition: background-color 0.3s ease-in-out;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.sidebar-item:hover, .sidebar-item:focus {
+  background-color: #002c3d;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar-item.active {
+  background-color: #004b66;
+}
+
+.sidebar-item::after {
+  content: '';
+  position: absolute;
+  width: 80%; 
+  left: 10%;
+  bottom: 0;
+  height: 1px;
+  background-color: #0088cc;
+}
+
+.sidebar-item:last-child::after {
+  display: none;
 }
