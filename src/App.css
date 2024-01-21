@@ -112,3 +112,27 @@ body {
 .sidebar-item:last-child::after {
   display: none;
 }
+.upload-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #001d26;
+  padding: 1rem;
+  position: relative;
+  transition: background-color 0.3s ease-in-out;
+  color: white;
+}
+
+.upload-button:hover, .upload-button:focus {
+  background-color: #002c3d;
+}
+
+.upload-button::after {
+  content: '';
+  position: absolute;
+  width: 80%; 
+  left: 10%;
+  bottom: 0;
+  height: 1px;
+  background-color: #0088cc;
+}

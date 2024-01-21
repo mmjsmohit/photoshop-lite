@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./Header";
 import Slider from "./Slider";
 import SidebarItem from "./SidebarItem";
+import UploadButton from "./UploadButton";
 
 const DEFAULT_OPTIONS = [
   {
@@ -81,6 +82,7 @@ function App() {
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
   const selectedOption = options[selectedOptionIndex];
+  const [image, setImage] = useState("./images/photo.avif");
   function handleSliderChange({ target }) {
     setOptions((prevOptions) => {
       return prevOptions.map((option, index) => {
@@ -90,6 +92,11 @@ function App() {
     });
   }
 
+  const handleImageUpload = (event) => {
+    const file = URL.createObjectURL(event.target.files[0]);
+    setImage(file);
+  };
+
   function getImageStyle() {
     const filters = options.map((option) => {
       return `${option.property}(${option.value}${option.unit})`;
@@ -98,31 +105,37 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <Header />
-      <div className="main-image" style={getImageStyle()}></div>
-      <div className="sidebar">
-        {options.map((option, index) => {
-          return (
-            <SidebarItem
-              active={index === selectedOptionIndex}
-              name={option.name}
-              handleClick={() => setSelectedOptionIndex(index)}
-              property={option.property}
-              value={option.value}
-              range={option.range}
-              unit={option.unit}
-            />
-          );
-        })}
+    <div className="App">
+      <div className="container">
+        <Header />
+        <div
+          className="main-image"
+          style={{ backgroundImage: `url(${image})`, ...getImageStyle() }}
+        ></div>
+        <div className="sidebar">
+          {options.map((option, index) => {
+            return (
+              <SidebarItem
+                active={index === selectedOptionIndex}
+                name={option.name}
+                handleClick={() => setSelectedOptionIndex(index)}
+                property={option.property}
+                value={option.value}
+                range={option.range}
+                unit={option.unit}
+              />
+            );
+          })}
+          <UploadButton handleUpload={(event) => handleImageUpload(event)} />
+        </div>
+        <Slider
+          min={selectedOption.range.min}
+          max={selectedOption.range.max}
+          value={selectedOption.value}
+          handleChange={handleSliderChange}
+        />
+        {/* <div className="download-button">Download</div> */}
       </div>
-      <Slider
-        min={selectedOption.range.min}
-        max={selectedOption.range.max}
-        value={selectedOption.value}
-        handleChange={handleSliderChange}
-      />
-      {/* <div className="download-button">Download</div> */}
     </div>
   );
 }
